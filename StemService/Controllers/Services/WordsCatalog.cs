@@ -18,17 +18,20 @@ namespace StemService.Controllers.Services
             task.Wait();
         }
 
-
         private async Task LoadWords()
         {
-            var result = await _httpClient.GetAsync(uri);
+            using var result = await _httpClient.GetAsync(uri);
             if (result.IsSuccessStatusCode)
             {
-                
+
                 var wordsAsString = await result.Content.ReadAsStringAsync();
                 Words = wordsAsString.Split(
                     Environment.NewLine.ToCharArray(),
                     StringSplitOptions.RemoveEmptyEntries);
+            }
+            else
+            {
+                Words = new string[0];
             }
         }
 
