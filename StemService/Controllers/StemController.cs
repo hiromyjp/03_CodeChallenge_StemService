@@ -1,11 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using StemService.Controllers.Services;
+﻿using Microsoft.AspNetCore.Mvc;
 using StemService.Interfaces;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace StemService.Controllers
 {
@@ -13,8 +8,6 @@ namespace StemService.Controllers
     [ApiController]
     public class StemController : ControllerBase
     {
-        private const string uri = "https://raw.githubusercontent.com/dwyl/english-words/master/words_alpha.txt";
-
         private IWordsCatalog _catalog;
 
         public StemController(IWordsCatalog catalog)
@@ -25,7 +18,6 @@ namespace StemService.Controllers
         [HttpGet]
         public IActionResult Get(string stem)
         {
-
             var response = new SearchResponse(_catalog.Find(stem));
             if (response.Data.Count > 0)
                 return Ok(response);
